@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { Observable } from 'rxjs'
+import { DocumentNode } from 'graphql';
+import { LocalDataSource } from 'ng2-smart-table';
 
+import {allGases} from '../graphql/allGases';
+import { allGasesQuery } from '../graphql/schema';
+
+import 'rxjs/add/operator/map';
 @Component({
   selector: 'home-page',
   templateUrl: './home.component.html',
@@ -7,20 +15,13 @@ import { Component } from '@angular/core';
 export class HomeComponent {
 
   simpleDrop: any = null;
-
-
+  data: LocalDataSource;
 
   settings = {
     columns: {
       name: {
         title: 'Full Name'
       },
-      username: {
-        title: 'User Name'
-      },
-      email: {
-        title: 'Email'
-      }
     },
     actions: {
       add: false,
@@ -32,85 +33,15 @@ export class HomeComponent {
     }
   };
 
-  data = [
-    {
-      id: 1,
-      name: "Leanne Graham",
-      username: "Bret",
-      email: "Sincere@april.biz"
-    },
-    {
-      id: 2,
-      name: "Ervin Howell",
-      username: "Antonette",
-      email: "Shanna@melissa.tv"
-    },
+  allGases: Observable<any>;
 
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-    {
-      id: 11,
-      name: "Nicholas DuBuque",
-      username: "Nicholas.Stanton",
-      email: "Rey.Padberg@rosamond.biz"
-    },
-  ];
+  constructor(public apollo: Apollo) {
+    this.data = new LocalDataSource();
+  }
+
+  ngOnInit() {
+    this.apollo.watchQuery<allGasesQuery>({ query: allGases }).valueChanges.map(result => result.data.allGases).subscribe((data) => {
+      this.data.load(data);
+    });
+  }
 }
