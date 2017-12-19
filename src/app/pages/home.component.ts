@@ -4,8 +4,13 @@ import { Observable } from 'rxjs'
 import { DocumentNode } from 'graphql';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import {allGases} from '../graphql/allGases';
-import { allGasesQuery } from '../graphql/schema';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { ModalComponent } from './modal/modal.component';
+
+import { allOrders } from '../graphql/allOrders';
+import { allOrdersQuery } from '../graphql/schema';
+
 
 import 'rxjs/add/operator/map';
 @Component({
@@ -19,8 +24,22 @@ export class HomeComponent {
 
   settings = {
     columns: {
-      name: {
-        title: 'Full Name'
+      order_identifier: {
+        title: 'O.C.'
+      },
+      user: {
+        title: 'username',
+        valuePrepareFunction: (user) => {
+          return user.username;
+        },
+        filterFunction(user?: any, search?: string): boolean {
+          let match = user.username.toLowerCase().includes(search.toLowerCase());
+          if (match || search === '') {
+            return true;
+          } else {
+            return false;
+          }
+        },
       },
     },
     actions: {
@@ -35,13 +54,20 @@ export class HomeComponent {
 
   allGases: Observable<any>;
 
-  constructor(public apollo: Apollo) {
+  constructor(public apollo: Apollo, private modalService: NgbModal) {
     this.data = new LocalDataSource();
   }
 
   ngOnInit() {
-    this.apollo.watchQuery<allGasesQuery>({ query: allGases }).valueChanges.map(result => result.data.allGases).subscribe((data) => {
-      this.data.load(data);
-    });
+    this.apollo.watchQuery<allOrdersQuery>({ query: allOrders }).valueChanges.map(result => result.data.allOrders)
+      .subscribe((data) =>
+        this.data.load(data)
+      );
   }
+
+  showLargeModal() {
+    const activeModal = this.modalService.open(ModalComponent, { size: 'lg', container: 'nb-layout' });
+    activeModal.componentInstance.modalHeader = 'Large Modal';
+  }
+
 }

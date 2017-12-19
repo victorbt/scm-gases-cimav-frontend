@@ -6,3 +6,15 @@ export interface allGasesQuery {
     }
   }> | null
 }
+
+
+export interface allOrdersQuery {
+  allOrders: Array<{
+    order_identifier: string,
+    user: {
+      id: number,
+      username: string
+    },
+    owner: string,
+  }> | null
+}

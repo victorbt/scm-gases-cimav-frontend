@@ -7,6 +7,8 @@ import { HomeComponent } from './pages/home.component'
 import { HttpClientModule } from '@angular/common/http';
 import { NbThemeModule } from '@nebular/theme';
 import { NbSidebarModule, NbLayoutModule, NbCardModule, NbTabsetModule } from '@nebular/theme';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './pages/modal/modal.component';
 
 import {DndModule} from 'ng2-dnd';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -20,10 +22,12 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes),
     NbThemeModule.forRoot({ name: 'default' }),
+    NgbModule.forRoot(),
     NbSidebarModule,
     NbLayoutModule,
     NbCardModule,
@@ -31,7 +35,13 @@ const appRoutes: Routes = [
     DndModule.forRoot(),
     Ng2SmartTableModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+
+  ],
+  entryComponents: [
+
+    ModalComponent
+
   ],
   providers: [],
   bootstrap: [AppComponent]
