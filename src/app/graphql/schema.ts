@@ -18,3 +18,10 @@ export interface allOrdersQuery {
     owner: string,
   }> | null
 }
+
+export interface allUsersQuery {
+  allUsers: Array<{
+    username: string;
+    id: number;
+  }> | null
+}

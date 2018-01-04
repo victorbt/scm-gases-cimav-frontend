@@ -1,43 +1,38 @@
 <nb-layout>
-  <nb-layout-header fixed>Company Name</nb-layout-header>
+  <nb-layout-header fixed>Company Name <span *ngIf="userData"><p>{{userData.user.displayName}} {{userData.user.id}}</p></span></nb-layout-header>
   <nb-layout-column style="padding: 0px;widht:100%;">
 
 
     <nb-card style="height:100%;">
       <nb-tabset style="height:100%" fullWidth>
-        <nb-tab style="height:95%" tabTitle="Ingresos">
-          <nb-card>
-            <nb-card-body>
-              <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
-              <button type="button" class="btn btn-outline-info btn-block" (click)="showLargeModal()"></button>
-            </nb-card-body>
-          </nb-card>
-          <div class="row">
+        <nb-tab tabTitle="Ingresos">
+
+          <ng2-smart-table [settings]="settings" [source]="data" (create)="createOrder()" (createConfirm)="createOrderConfirm()"></ng2-smart-table>
+          <button type="button" class="btn btn-outline-info btn-block " (click)="logout() "></button>
+
+          <!--
+          <div class="row ">
             <div class="col-6 ">
 
 
-              <nb-card style="min-height:250px">
-                <nb-card-body>
-                  <div class="panel panel-success ">
-                    <div class="panel-heading ">Available to drag</div>
+              <div class="panel panel-success ">
+                <div class="panel-heading ">Available to drag</div>
+                <div class="panel-body ">
+                  <div class="panel panel-default " dnd-draggable [dragEnabled]="true ">
                     <div class="panel-body ">
-                      <div class="panel panel-default " dnd-draggable [dragEnabled]="true">
-                        <div class="panel-body ">
-                          <div>Drag Me</div>
-                        </div>
-                      </div>
+                      <div>Drag Me</div>
                     </div>
                   </div>
-                </nb-card-body>
-              </nb-card>
+                </div>
+              </div>
             </div>
 
 
             <div class=" col-6 ">
-              <nb-card style="min-height:250px">
+              <nb-card style="min-height:250px ">
                 <nb-card-body>
-                  <div style="height:100%;" dnd-droppable class="panel panel-info" (onDropSuccess)="simpleDrop=$event">
-                    <div style="height:100%;" class="panel-heading ">Place to drop</div>
+                  <div style="height:100%; " dnd-droppable class="panel panel-info " (onDropSuccess)="simpleDrop=$event ">
+                    <div style="height:100%; " class="panel-heading ">Place to drop</div>
                     <div class="panel-body ">
                       <div *ngIf="simpleDrop ">Item was dropped here</div>
                     </div>
@@ -49,6 +44,7 @@
 
 
           </div>
+          -->
         </nb-tab>
         <nb-tab tabTitle="Movimientos ">
           <span>Content #2</span>

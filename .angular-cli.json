@@ -18,6 +18,7 @@
     "testTsconfig": "tsconfig.spec.json",
     "prefix": "app",
     "styles": [
+      "../node_modules/nebular-icons/scss/nebular-icons.scss",
       "styles.css",
       "../node_modules/bootstrap/dist/css/bootstrap.css",
       "../node_modules/@nebular/theme/styles/prebuilt/default.css"
