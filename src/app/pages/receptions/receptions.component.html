@@ -1,0 +1,41 @@
+<nb-layout windowMode>
+  <nb-layout-column style="background: white;">
+
+    <div class="row ">
+
+      <div class="col" *ngIf="requestedGases?.length">
+        <nb-card style="height:392px;">
+          <nb-card-header>
+            <span>Gases Pendientes</span>
+            <input #gasName type="text" (input)="filterGases(gasName.value,gasOrder.value)" />
+            <input #gasOrder type="text" (input)="filterGases(gasName.value,gasOrder.value)" />
+          </nb-card-header>
+          <nb-card-body>
+            <ng-container *ngFor="let gas of filteredRequestedGases;">
+              <nb-card dnd-draggable [dragEnabled]="true " [dragData]="gas">
+                <div class="details">
+                  <div class="title">{{gas.type.name}}/ {{gas.user.username}}</div>
+                  <div class="status">{{gas.order.order_identifier}}</div>
+                </div>
+              </nb-card>
+            </ng-container>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col">
+        <nb-card style="height:392px">
+          <nb-card-header>
+            <span>Ingresos</span>
+          </nb-card-header>
+          <nb-card-body dnd-droppable (onDropSuccess)="dropDataSuccess($event)">
+            <div style="height:100%; ">Place to drop</div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+
+
+  </nb-layout-column>
+</nb-layout>

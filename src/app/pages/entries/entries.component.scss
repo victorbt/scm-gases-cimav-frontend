@@ -1,0 +1,43 @@
+
+.input-group.has-search-icon {
+  position: relative;
+  padding-bottom: 2%;
+
+  .form-control {
+    padding-left: 3rem;
+  }
+
+  &::before {
+    content: '\e946';
+    font-family: 'nebular';
+    font-size: 2rem;
+    position: absolute;
+    z-index: 100;
+    left: 1rem;
+    top: 0.25rem;
+  }
+
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 0.5rem 0 0.75rem;
+  border-left: 1px solid transparent;
+}
+
+.title {
+  font-family: nb-theme(font-secondary);
+  font-size: 1.25rem;
+  font-weight: nb-theme(font-weight-bold);
+  color: nb-theme(card-fg-heading);
+}
+
+.status {
+  font-size: 1rem;
+  font-weight: nb-theme(font-weight-light);
+  text-transform: uppercase;
+  color: nb-theme(card-fg);
+}

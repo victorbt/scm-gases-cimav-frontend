@@ -1,0 +1,65 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<nb-layout windowMode>
+  <nb-layout-column style="background: white;">
+    <nb-card>
+      <nb-card-header style="padding: 0.8rem 2.4rem;">
+        <div style="justify-content: space-between;align-items: center;" class="row">
+          <span>Ordenes de Compra</span>
+          <button style="padding: .18rem 1.2rem;width:10.2%" type="button" class="btn btn-success btn-icon btn-md" (click)="createOrder()"><i style="font-size: 32px" class="nb-plus"></i></button>
+        </div>
+
+      </nb-card-header>
+      <nb-card-body>
+        <div class="input-group has-search-icon">
+          <input #search type="text" placeholder="Search..." class="form-control" (input)="onSearch(search.value)" />
+          <div style="width:65.5%"></div>
+          <!--  <button style="padding: .18rem 1.2rem;" type="button" class="btn btn-info btn-icon btn-tn" (click)="createOrder()"><i style="font-size: 32px" class="nb-plus"></i></button>-->
+        </div>
+        <ng2-smart-table [settings]="settings" [source]="data" (edit)="editOrder($event)"> </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+
+
+    <div class="row ">
+
+      <div class="col" *ngIf="pendingGases?.length">
+        <nb-card style="height:392px;">
+          <nb-card-header>
+            <span>Gases por solicitar</span>
+            <input #gasOrder type="text" (input)="filterPendingGases(gasName.value,gasOrder.value)" />
+            <input #gasName type="text" (input)="filterPendingGases(gasName.value,gasOrder.value)" />
+          </nb-card-header>
+          <nb-card-body>
+            <ng-container *ngFor="let gas of filteredPendingGases;">
+              <nb-card dnd-draggable [dragEnabled]="true " [dragData]="gas">
+                <div class="details">
+                  <div class="title">{{gas.type.name}}/{{gas.user.username}}</div>
+                  <div class="status">{{gas.order.order_identifier}}</div>
+                </div>
+              </nb-card>
+            </ng-container>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col">
+        <nb-card style="height:392px">
+          <nb-card-header>
+            <span>Almacen</span>
+          </nb-card-header>
+          <nb-card-body dnd-droppable (onDropSuccess)="dropDataSuccess($event)">
+            <ng-container *ngFor="let gas of filteredRequestedGases;">
+              <nb-card>
+                <div class="details">
+                  <div class="title">{{gas.type.name}}/{{gas.user.username}}</div>
+                  <div class="status">{{gas.order.order_identifier}}</div>
+                </div>
+              </nb-card>
+            </ng-container>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+  </nb-layout-column>
+</nb-layout>
